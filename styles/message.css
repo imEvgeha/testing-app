@@ -1,0 +1,46 @@
+.message-backgroung {
+  background-color: black;
+  color: gray;
+  margin: 10px;
+  padding: 20px;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 3px;
+  border-radius: 4px;
+}
+
+.messageExample {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-body {
+  max-height: 108px;
+  overflow: auto;
+}
+
+.message-title {
+  max-height: 54px;
+  overflow: auto;
+}
+
+.delete-button {
+  position: absolute;
+  top: 90px;
+  left: 80%;
+}
+
+.message-rete {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 4%;
+}
+
+.post-comment {
+  margin-top: 20px;
+}

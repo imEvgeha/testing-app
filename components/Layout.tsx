@@ -1,5 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import Link from 'next/link'
+import Head from 'next/head'
 import styled, { css } from 'styled-components'
 
 export function Layout ({ children }) {
@@ -10,6 +11,7 @@ export function Layout ({ children }) {
     color: palevioletred;
     margin: 0.5em 1em;
     padding: 0.25em 1em;
+    cursor: pointer;
 
     ${props => props.primary && css`
       background: palevioletred;
@@ -19,19 +21,17 @@ export function Layout ({ children }) {
 
   return (
     <div>
+      <Head>Testing app :)</Head>
       <nav className="layout-container">
         <h1>Test task :)</h1>
-        <Link href="/posts/new" >
-          <a className="layout-first-button">
+        <div className="layout-first-button">
+          <Link href="/posts/new" >
             <Button>Create message</Button>
-          </a>
-        </Link>
-        <Link href="/">
-          <a>
+          </Link>
+          <Link href="/">
             <Button>Feed</Button>
-          </a>
-        </Link>
-
+          </Link>
+        </div>
       </nav>
       <main>
         {children}

@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Layout } from '../../components/Layout'
 import { Message } from '../../components/Message'
+import { createPost } from '../../network/axios'
 import styled, { css } from 'styled-components'
 
 export default function createMessage () {
@@ -30,19 +31,7 @@ export default function createMessage () {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    const axios = require('axios')
-
-    axios.post('https://simple-blog-api.crew.red/posts', {
-      title: title,
-      body: body
-    })
-      .then(function () {
-        alert('Successfully created!')
-      })
-      .catch(function (error: any) {
-        console.log(error)
-        alert('Error! Check console.log')
-      })
+    createPost({ title, body })
 
     setTitle('')
     setBody('')

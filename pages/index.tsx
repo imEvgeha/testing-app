@@ -4,6 +4,7 @@ import { Layout } from '../components/Layout'
 import { Message } from '../components/Message'
 import { connect } from 'react-redux'
 import { setData } from '../redux/actions/main'
+import { getPosts } from '../network/axios'
 import Link from 'next/link'
 
 export type TMessageData = {
@@ -28,11 +29,9 @@ function Home (props: TProps) {
   const { getData, setData } = props
 
   useEffect(() => {
-    const axios = require('axios')
-
-    axios.get('https://simple-blog-api.crew.red/posts')
+    getPosts()
       .then(function (response: any) {
-        setData(response.data)
+        setData(response)
       })
       .catch(function (error: any) {
         console.log(error)
@@ -42,7 +41,7 @@ function Home (props: TProps) {
   return (
     <Layout>
       <div className="message-rete">
-        { getData.map((elem: TMessageData) => {
+        { getData.reverse().map((elem: TMessageData) => {
           return (
             <Link key={elem.id} href={'/posts/[id]'} as={`/posts/${elem.id}`}>
               <a>

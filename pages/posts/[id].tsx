@@ -5,6 +5,7 @@ import { setMessage } from '../../redux/actions/main'
 import { connect } from 'react-redux'
 import { Layout } from '../../components/Layout'
 import { TMessageData } from '..'
+import { getDefinitePost, deleteDefinitePost, createComment } from '../../network/axios'
 import styled from 'styled-components'
 
 export type TMessageProps = {
@@ -12,11 +13,10 @@ export type TMessageProps = {
   setMessage: (data) => void
 }
 
-function Posts(props: TMessageProps) {
+function Posts (props: TMessageProps) {
   const [body, setBody] = useState<string>('')
   const { getMessage, setMessage } = props
   const id = useRouter().query.id
-  const axios = require('axios')
   const router = useRouter()
 
   const Button = styled.button`
@@ -29,25 +29,18 @@ function Posts(props: TMessageProps) {
     `
 
   useEffect(() => {
-    axios.get(`https://simple-blog-api.crew.red/posts/${id}?_embed=comments`)
+    getDefinitePost(id)
       .then(function (response: any) {
-        setMessage(response.data)
-      })
-      .catch(function (error: any) {
-        console.log(error)
+        setMessage(response)
       })
   }, [])
 
   const handleDeleteClick = () => {
-    axios.delete(`https://simple-blog-api.crew.red/posts/${id}?_embed=comments`)
-      .then(function (response: any) {
-        setMessage(response.data)
+    deleteDefinitePost(id)
+      .then(function () {
         router.push({
-          pathname: '/',
+          pathname: '/'
         })
-      })
-      .catch(function (error: any) {
-        console.log(error)
       })
   }
 
@@ -58,19 +51,7 @@ function Posts(props: TMessageProps) {
 
   const handleCommentSubmit = (event) => {
     event.preventDefault()
-
-    axios.post('https://simple-blog-api.crew.red/comments', {
-      postId: id,
-      body: body
-    })
-      .then(function () {
-        alert('Successfully created!')
-      })
-      .catch(function (error: any) {
-        console.log(error)
-        alert('Error! Check console.log')
-      })
-
+    createComment({ id, body })
     setBody('')
   }
 
